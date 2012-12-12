@@ -17,3 +17,4 @@
 	br = branch
 	lga = log --decorate --stat --graph --pretty=format:\"%d %Cgreen%h%Creset (%ar - %Cred%an%Creset), %s%n\"
 	lg = log --decorate --graph --format='%Cgreen%h%Creset %ad %C(cyan)%an%Creset - %s%C(red)%d%Creset' --date=short
+	l = log --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)' --abbrev-commit
