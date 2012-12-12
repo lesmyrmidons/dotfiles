@@ -15,4 +15,5 @@
 	ci = commit
 	co = checkout
 	br = branch
-	lg = log --decorate --stat --graph --pretty=format:\"%d %Cgreen%h%Creset (%ar - %Cred%an%Creset), %s%n\"
+	lga = log --decorate --stat --graph --pretty=format:\"%d %Cgreen%h%Creset (%ar - %Cred%an%Creset), %s%n\"
+	lg = log --decorate --graph --pretty=oneline
