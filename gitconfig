@@ -16,4 +16,4 @@
 	co = checkout
 	br = branch
 	lga = log --decorate --stat --graph --pretty=format:\"%d %Cgreen%h%Creset (%ar - %Cred%an%Creset), %s%n\"
-	lg = log --decorate --graph --pretty=oneline
+	lg = log --decorate --graph --format='%Cgreen%h%Creset %ad %C(cyan)%an%Creset - %s%C(red)%d%Creset' --date=short
