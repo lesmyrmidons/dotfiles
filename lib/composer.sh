@@ -1,11 +1,12 @@
-#/bin/sh
-PACKAGE = 'curl'
+#!/usr/bin/env bash
+
+PACKAGE='curl'
 
 sudo apt-get install $PACKAGE
 
 # Install composer.phar
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin
+echo "Install to composer.phar"
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin/
 
-cd /usr/local/bin
-# Create symlink for composer because a plugin oh-my-zsh 'composer' use "composer" for an alias
-ln -s composer.phar composer
+# Rename composer.phar composer
+sudo mv /usr/local/bin/composer.phar /usr/local/bin/composer
