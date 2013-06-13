@@ -16,6 +16,7 @@
     editor = vim
     whitespace = trailing-space,space-before-tab
     autocrlf = input
+    excludesfile = ~/.gitignore_global
 
 [help]
     autocorrect = 1

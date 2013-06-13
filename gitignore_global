@@ -11,8 +11,16 @@ ehthumbs.db
 *.orig
 *~
 \#*\#
+
+
+#  IDE  #
+#########
 .buildpath
 .project
 .settings/
 build/
 .idea/
+
+#  Logs  #
+##########
+*.log
