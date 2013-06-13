@@ -2,12 +2,9 @@
 
 CURRENT=`pwd`
 
-PACKAGE = 'git git-core curl terminator'
+PACKAGE='git git-core curl terminator'
 
 sudo apt-get install $PACKAGE
-
-# Install composer.phar
-curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 if [ -f ~/.gitconfig ] ; then
     cat ~/.gitconfig > ~/gitconfig.backup
