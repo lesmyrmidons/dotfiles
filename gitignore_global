@@ -1,0 +1,26 @@
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+._*
+Icon?
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*.orig
+*~
+\#*\#
+
+
+#  IDE  #
+#########
+.buildpath
+.project
+.settings/
+build/
+.idea/
+
+#  Logs  #
+##########
+*.log
