@@ -3,6 +3,7 @@
 CURRENT=`pwd`
 INSTALL_COMPOSER=true
 INSTALL_ZSH=true
+INSTALL_TERM=true
 
 # Parsing options
 if [ $# -gt 0 ] ; then
@@ -11,11 +12,17 @@ if [ $# -gt 0 ] ; then
             INSTALL_ZSH=false
         elif [ $arg = '--no-composer' ] ; then
             INSTALL_VIM=false
+        elif [ $arg = '--no-term' ] ; then
+            INSTALL_TERM=false
         fi
     done
 fi
 
-PACKAGE='git git-core curl terminator'
+PACKAGE='git git-core curl'
+
+if $INSTALL_TERM ; then
+    PACKAGE="$PACKAGE terminator"
+fi
 
 sudo apt-get install $PACKAGE
 
@@ -39,8 +46,16 @@ fi
 
 ln -s $CURRENT/gitconfig ~/.gitconfig
 ln -s $CURRENT/gitignore_global ~/.gitignore_global
+ln -s $CURRENT/_config/fontconfig/ ~/.config/fontconfig
 ln -s $CURRENT/_config/terminator/ ~/.config/terminator
+ln -s $CURRENT/_fonts/ ~/.fonts
 
 if $INSTALL_COMPOSER ; then
     ./lib/composer.sh
+fi
+
+git submodule update --init
+if $INSTALL_ZSH ; then
+    cd $CURRENT/zsh-config
+    ./install.sh
 fi
