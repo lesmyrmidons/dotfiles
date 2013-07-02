@@ -36,9 +36,11 @@
     smtpencryption = tls
 
 [tig]
-    show-date = no         # Show commit date?
-    author-width = 10       # Set width of the author column
-    line-graphics = yes
+    show-date = "relative"      # Show relative commit date.
+    show-author = "abbreviated"
+    line-graphics = no
+    line-number-interval = 5    # Interval between line numbers
+    horizontal-scroll = 33%     # Scroll 33% of the view width
     tab-size = 4
 
 [alias]
