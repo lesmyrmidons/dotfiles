@@ -18,7 +18,7 @@ if [ $# -gt 0 ] ; then
     done
 fi
 
-PACKAGE='git git-core curl'
+PACKAGE='git git-core tig curl'
 
 if $INSTALL_TERM ; then
     PACKAGE="$PACKAGE terminator"

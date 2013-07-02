@@ -35,6 +35,12 @@
     smtpserverport = 587
     smtpencryption = tls
 
+[tig]
+    show-date = no         # Show commit date?
+    author-width = 10       # Set width of the author column
+    line-graphics = yes
+    tab-size = 4
+
 [alias]
 	st = status
 	ci = commit
