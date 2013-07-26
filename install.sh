@@ -22,6 +22,14 @@ PACKAGE='git git-core tig curl'
 
 if $INSTALL_TERM ; then
     PACKAGE="$PACKAGE terminator"
+
+    if [ -f ~/.config/terminator/config ] ; then
+        cat ~/.config/terminator/config > ~/.config/terminator/config.backup
+        rm -rf ~/.config/terminator
+        echo "Existing .config terminator > save ~/.config/terminator/config.backup"
+    fi
+
+    ln -s $CURRENT/_config/terminator/ ~/.config/terminator
 fi
 
 sudo apt-get install $PACKAGE
@@ -38,16 +46,10 @@ if [ -f ~/.gitignore_global ] ; then
     echo "Existing .gitignore_global > save gitignore_global.backup"
 fi
 
-if [ -f ~/.config/terminator/config ] ; then
-    cat ~/.config/terminator/config > ~/.config/terminator/config.backup
-    rm -rf ~/.config/terminator
-    echo "Existing .config terminator > save ~/.config/terminator/config.backup"
-fi
 
 ln -s $CURRENT/gitconfig ~/.gitconfig
 ln -s $CURRENT/gitignore_global ~/.gitignore_global
 ln -s $CURRENT/_config/fontconfig/ ~/.config/fontconfig
-ln -s $CURRENT/_config/terminator/ ~/.config/terminator
 ln -s $CURRENT/_fonts/ ~/.fonts
 
 if $INSTALL_COMPOSER ; then
