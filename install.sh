@@ -21,6 +21,14 @@ fi
 PACKAGE='git git-core tig curl'
 
 if $INSTALL_TERM ; then
+    if [ -f ~/.config/terminator/config ] ; then
+        cat ~/.config/terminator/config > ~/.config/terminator/config.backup
+        rm -rf ~/.config/terminator
+        echo "Existing .config terminator > save ~/.config/terminator/config.backup"
+    fi
+
+    ln -sf $CURRENT/_config/terminator/ ~/.config/terminator
+
     PACKAGE="$PACKAGE terminator"
 
     if [ -f ~/.config/terminator/config ] ; then
@@ -32,6 +40,7 @@ if $INSTALL_TERM ; then
     ln -s $CURRENT/_config/terminator/ ~/.config/terminator
 fi
 
+echo "Installation des packages ------------------------- $PACKAGE"
 sudo apt-get install $PACKAGE
 
 if [ -f ~/.gitconfig ] ; then
@@ -46,18 +55,25 @@ if [ -f ~/.gitignore_global ] ; then
     echo "Existing .gitignore_global > save gitignore_global.backup"
 fi
 
+if [ -f ~/.config/fontconfig ] ; then
+    rm -rf ~/.config/fontconfig
+    echo "Existing .config/fontconfig => remove"
+fi
 
-ln -s $CURRENT/gitconfig ~/.gitconfig
-ln -s $CURRENT/gitignore_global ~/.gitignore_global
-ln -s $CURRENT/_config/fontconfig/ ~/.config/fontconfig
-ln -s $CURRENT/_fonts/ ~/.fonts
+
+ln -sf $CURRENT/gitconfig ~/.gitconfig
+ln -sf $CURRENT/gitignore_global ~/.gitignore_global
+ln -sf $CURRENT/_config/fontconfig/ ~/.config/fontconfig
+ln -sf $CURRENT/_fonts/ ~/.fonts
 
 if $INSTALL_COMPOSER ; then
+    echo "Installation de composer ------------------------- "
     ./lib/composer.sh
 fi
 
 git submodule update --init
 if $INSTALL_ZSH ; then
+    echo "Installation de zsh --------------------------- "
     cd $CURRENT/zsh-config
     ./install.sh
 fi
