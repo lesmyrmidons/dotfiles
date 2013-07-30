@@ -68,7 +68,7 @@ ln -sf $CURRENT/_fonts/ ~/.fonts
 
 if $INSTALL_COMPOSER ; then
     echo "Installation de composer ------------------------- "
-    ./lib/composer.sh
+    lib/composer.sh
 fi
 
 git submodule update --init
