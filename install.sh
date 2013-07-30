@@ -72,6 +72,7 @@ if $INSTALL_COMPOSER ; then
 fi
 
 git submodule update --init
+git submodule foreach git pull origin master
 if $INSTALL_ZSH ; then
     echo "Installation de zsh --------------------------- "
     cd $CURRENT/zsh-config
