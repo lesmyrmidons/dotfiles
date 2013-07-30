@@ -32,9 +32,9 @@ if $INSTALL_TERM ; then
     PACKAGE="$PACKAGE terminator"
 
     if [ -f ~/.config/terminator/config ] ; then
-        cat ~/.config/terminator/config > ~/.config/terminator/config.backup
+        cat ~/.config/terminator/config > ~/terminator-config.backup
         rm -rf ~/.config/terminator
-        echo "Existing .config terminator > save ~/.config/terminator/config.backup"
+        echo "Existing .config terminator > save ~/terminator-config.backup"
     fi
 
     ln -s $CURRENT/_config/terminator/ ~/.config/terminator
