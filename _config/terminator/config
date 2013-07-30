@@ -5,11 +5,12 @@
 [keybindings]
 [profiles]
   [[default]]
+    visible_bell = True
     background_darkness = 0.76
     background_type = transparent
     foreground_color = "#eee8d5"
     show_titlebar = False
-    font = Inconsolata Medium 12
+    font = Ubuntu 11
     background_color = "#002b36"
     scrollback_infinite = True
   [[b&w]]
