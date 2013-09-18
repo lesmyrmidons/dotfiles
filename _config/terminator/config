@@ -1,5 +1,6 @@
 [global_config]
   title_hide_sizetext = True
+  window_state = maximise
   enabled_plugins = CustomCommandsMenu, InactivityWatch, ActivityWatch, TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   sticky = True
 [keybindings]
@@ -25,11 +26,46 @@
     font = Monospace 8
     scrollback_infinite = True
 [layouts]
-  [[default]]
+  [[window1]]
     [[[child1]]]
       type = Terminal
       parent = window0
     [[[window0]]]
       type = Window
       parent = ""
+  [[default]]
+    [[[child0]]]
+      position = 72:27
+      type = Window
+      order = 0
+      parent = ""
+      size = 1848, 1025
+    [[[child1]]]
+      position = 924
+      type = HPaned
+      order = 0
+      parent = child0
+    [[[child3]]]
+      position = 512
+      type = VPaned
+      order = 1
+      parent = child1
+    [[[terminal2]]]
+      profile = default
+      command = ""
+      type = Terminal
+      order = 0
+      parent = child1
+    [[[terminal5]]]
+      profile = tiny
+      command = ""
+      type = Terminal
+      order = 1
+      parent = child3
+    [[[terminal4]]]
+      profile = default
+      command = ""
+      type = Terminal
+      order = 0
+      parent = child3
 [plugins]
