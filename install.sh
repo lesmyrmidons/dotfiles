@@ -4,6 +4,7 @@ CURRENT=`pwd`
 INSTALL_COMPOSER=true
 INSTALL_ZSH=true
 INSTALL_TERM=true
+INSTALL_ANSIBLE=false
 
 # Parsing options
 if [ $# -gt 0 ] ; then
@@ -14,6 +15,8 @@ if [ $# -gt 0 ] ; then
             INSTALL_COMPOSER=false
         elif [ $arg = '--no-term' ] ; then
             INSTALL_TERM=false
+        elif [ $arg = '--ansible' ] ; then
+            INSTALL_ANSIBLE=true
         elif [ $arg = '--help' ] ; then
             printf "\033[0;32mDotfiles lesmyrmidons\033[0m\n\n"
             printf "\033[0;33mUsage:\033[0m\n"
@@ -22,6 +25,7 @@ if [ $# -gt 0 ] ; then
             printf "  \033[0;32m--no-zsh\033[0m\t\tDon't install zsh\n"
             printf "  \033[0;32m--no-composer\033[0m\t\tDon't install composer\n"
             printf "  \033[0;32m--no-term\033[0m\t\tDon't install term terminator\n"
+            printf "  \033[0;32m--ansible\033[0m\t\tInstall ansible and a configuration\n"
             printf "  \033[0;32m--help\033[0m\t\tDisplay this help message\n"
             exit 0;
         fi
@@ -40,17 +44,24 @@ if $INSTALL_TERM ; then
     ln -sf $CURRENT/_config/terminator/ ~/.config/terminator
 
     PACKAGE="$PACKAGE terminator"
+fi
 
-    if [ -f ~/.config/terminator/config ] ; then
-        cat ~/.config/terminator/config > ~/terminator-config.backup
-        rm -rf ~/.config/terminator
-        printf "\033[0;36mExisting .config terminator > save\033[0m \033[0;32m~/terminator-config.backup\033[0m\n"
+if $INSTALL_ANSIBLE ; then
+    if [ -f ~/.ansible.cfg ] ; then
+        cat ~/.ansible.cfg > ~/ansible.cfg.backup
+        rm -f ~/.ansible.cfg
+        printf "\033[0;36mExisting .ansible.cfg > save\033[0m \033[0;32m~/ansible.cfg.backup\033[0m\n"
     fi
 
-    ln -s $CURRENT/_config/terminator/ ~/.config/terminator
+    sudo add-apt-repository ppa:rquillo/ansible
+
+    ln -sf $CURRENT/ansible.cfg ~/.ansible.cfg
+
+    PACKAGE="$PACKAGE ansible"
 fi
 
 printf "Install package ------------------------- \033[0;32m$PACKAGE\033[0m\n"
+sudo apt-get update
 sudo apt-get install $PACKAGE
 echo ""
 printf "Test files exist ------------------------ \033[0;32m~/.gitconfig ~/.gitignore_global ~/.config/fontconfig\033[0m\n"
