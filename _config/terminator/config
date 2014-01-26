@@ -14,7 +14,7 @@
     background_image = None
     foreground_color = "#839496"
     show_titlebar = False
-    font = Ubuntu 11
+    font = Terminus for Powerline Italic 10
     scrollback_infinite = True
   [[b&w]]
     background_image = None
