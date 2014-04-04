@@ -51,8 +51,6 @@
 [remote "origin"]
     fetch = +refs/heads/*:refs/remotes/origin/*
     fetch = +refs/tags/*:refs/tags/*
-    push  = +refs/heads/*:refs/heads/*
-    push  = +refs/tags/*:refs/tags/*
 
 [alias]
     st = status
@@ -63,3 +61,6 @@
     lg = log --decorate --graph --format='%Cgreen%h%Creset %ad %C(cyan)%an%Creset - %s%C(red)%d%Creset' --date=short
     l = log --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)' --abbrev-commit --all
     stat = shortlog -sne
+
+[push]
+    default = simple
