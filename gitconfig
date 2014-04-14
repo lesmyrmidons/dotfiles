@@ -61,6 +61,7 @@
     lg = log --decorate --graph --format='%Cgreen%h%Creset %ad %C(cyan)%an%Creset - %s%C(red)%d%Creset' --date=short
     l = log --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)' --abbrev-commit --all
     stat = shortlog -sne
+    oups = reset HEAD^
 
 [push]
     default = simple
