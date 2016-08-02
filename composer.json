@@ -1,0 +1,13 @@
+{
+    "name": "lesmyrmidons/dotfiles",
+    "description": "My dotfiles for Ansible, Zsh, Git, etc.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin ARBOUIN",
+            "email": "lesmyrmidons@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
