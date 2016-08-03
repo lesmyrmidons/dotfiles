@@ -8,6 +8,15 @@
             "email": "lesmyrmidons@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:lesmyrmidons/zsh-config.git"
+        }
+    ],
+    "require": {
+        "lesmyrmidons/zsh-config": "~1"
+    },
     "minimum-stability": "dev",
-    "require": {}
+    "prefer-stability": true
 }

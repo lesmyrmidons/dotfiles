@@ -1,0 +1,40 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "eb0afa059fe2ce73f1085bcf26ae4e64",
+    "content-hash": "1b7e9b7262e84155aaed81f09e75f19d",
+    "packages": [
+        {
+            "name": "lesmyrmidons/zsh-config",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:lesmyrmidons/zsh-config.git",
+                "reference": "1ad68b6469e93d40f47a5e2ad0f6bf16996db94a"
+            },
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin ARBOUIN",
+                    "email": "lesmyrmidons@gmail.com"
+                }
+            ],
+            "description": "Configuration Zsh",
+            "time": "2016-08-02 15:35:51"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
