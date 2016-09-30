@@ -18,5 +18,5 @@
         "lesmyrmidons/zsh-config": "~1"
     },
     "minimum-stability": "dev",
-    "prefer-stability": true
+    "prefer-stable": true
 }
