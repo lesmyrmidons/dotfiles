@@ -4,16 +4,16 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eb0afa059fe2ce73f1085bcf26ae4e64",
-    "content-hash": "1b7e9b7262e84155aaed81f09e75f19d",
+    "hash": "cdeeb27ff631b599a8207b36be6b6b29",
+    "content-hash": "3bc0b9997d5d514d8117b7d38c53c2d5",
     "packages": [
         {
             "name": "lesmyrmidons/zsh-config",
-            "version": "1.0",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:lesmyrmidons/zsh-config.git",
-                "reference": "1ad68b6469e93d40f47a5e2ad0f6bf16996db94a"
+                "reference": "cf815d6aa3388a1fe931b918c6e8fa5b2d1aa034"
             },
             "type": "library",
             "license": [
@@ -26,14 +26,14 @@
                 }
             ],
             "description": "Configuration Zsh",
-            "time": "2016-08-02 15:35:51"
+            "time": "2016-10-05 10:16:09"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
