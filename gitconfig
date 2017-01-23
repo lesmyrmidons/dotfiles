@@ -27,6 +27,7 @@
     whitespace = trailing-space,space-before-tab
     autocrlf = input
     excludesfile = ~/.gitignore_global
+    # fileMode = false         # To ignore all file access rights changes
 
 [help]
     autocorrect = 1
@@ -35,10 +36,10 @@
     tool = vimdiff
 
 [sendemail]
-    smtpserver = smtp.gmail.com
-    smtpuser = lesmyrmidons@gmail.com
-    smtpserverport = 587
-    smtpencryption = tls
+    smtpEncryption = tls
+    smtpServer = smtp.gmail.com
+    smtpUser = lesmyrmidons@gmail.com
+    smtpServerPort = 587
 
 [tig]
     show-date = "relative"      # Show relative commit date.
