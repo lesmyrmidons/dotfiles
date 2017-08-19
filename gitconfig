@@ -25,7 +25,7 @@
 [core]
     editor = vim
     whitespace = trailing-space,space-before-tab
-    autocrlf = input
+    autocrlf = true
     excludesfile = ~/.gitignore_global
     # fileMode = false         # To ignore all file access rights changes
 
@@ -69,4 +69,5 @@
 
 [push]
     default = simple
-	followTags = true
+    followTags = true
+
