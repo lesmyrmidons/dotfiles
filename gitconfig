@@ -25,7 +25,6 @@
 [core]
     editor = vim
     whitespace = trailing-space,space-before-tab
-    autocrlf = true
     excludesfile = ~/.gitignore_global
     # fileMode = false         # To ignore all file access rights changes
 
