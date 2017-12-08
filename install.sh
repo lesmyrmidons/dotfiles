@@ -48,13 +48,15 @@ backup_file() {
 OS=`lowercase \`uname\``
 case $OS in
   'linux')
-    OS='Linux'
-    ;;
+     OS='Linux'
+     ;;
   'darwin')
-    OS='Mac'
-    INSTALL_TERM=false
-    sudo chown -R $(whoami) /usr/local
-    ;;
+     OS='Mac'
+     INSTALL_TERM=false
+     sudo chown -R $(whoami) /usr/local
+     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     brew doctor
+     ;;
   *) ;;
 esac
 
@@ -117,6 +119,12 @@ printf "   \033[0;36m.gitignore_global\033[0m\n"
 ln -sf $CURRENT/gitignore_global ~/.gitignore_global
 echo ""
 
+echo "Installation de RVM ----------------------------- "
+curl -L https://get.rvm.io | bash -s stable --auto-dotfiles --autolibs=enable
+type rvm | head -1
+rvm install 2.3.0
+rvm use 2.3.0 --default
+
 if $INSTALL_COMPOSER ; then
     echo "Installation de composer ------------------------- "
     lib/composer.sh
@@ -129,6 +137,9 @@ if $INSTALL_ZSH ; then
 fi
 
 if [ "$OS" = "Mac" ] ; then
+    brew update
+    brew doctor
+    brew upgrade
     sudo chown root:wheel /usr/local
 fi
 
