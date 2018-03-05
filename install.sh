@@ -3,6 +3,7 @@
 CURRENT=`pwd`
 BACKUP=$CURRENT/backup
 INSTALL_COMPOSER=true
+INSTALL_COMPOSER_GLOBAL=false
 INSTALL_ZSH=true
 INSTALL_TERM=true
 INSTALL_ANSIBLE=false
@@ -81,6 +82,7 @@ fi
 printf "Install package ------------------------- \033[0;32m$PACKAGE\033[0m\n"
 if [ "$OS" = "Mac" ] ; then
     brew update
+    brew upgrade
     brew install $PACKAGE
 else
     if [ "$OS" = "Linux" ] ; then
@@ -127,19 +129,16 @@ rvm use 2.3.0 --default
 
 if $INSTALL_COMPOSER ; then
     echo "Installation de composer ------------------------- "
-    lib/composer.sh
-fi
-
-if $INSTALL_ZSH ; then
-    echo "Installation de zsh --------------------------- "
-    cd $CURRENT/vendor/lesmyrmidons/zsh-config
-    ./install.sh
+    lib/composer.sh global=$INSTALL_COMPOSER_GLOBAL
+    
+    if $INSTALL_ZSH ; then
+        echo "Installation de zsh --------------------------- "
+        $CURRENT/vendor/lesmyrmidons/zsh-config/install.sh
+    fi
 fi
 
 if [ "$OS" = "Mac" ] ; then
-    brew update
     brew doctor
-    brew upgrade
     sudo chown root:wheel /usr/local
 fi
 

@@ -1,5 +1,5 @@
 Config zsh, git, php
-=========================
+====================
 
 ![](https://raw.github.com/lesmyrmidons/dotfiles/master/img/screenshot.png)
 
@@ -7,7 +7,16 @@ Config zsh, git, php
 Intallation
 -----------
 
-Just run : `sudo ./install.sh [options]`
+For linux
+
+Current user just run : `sudo ./install.sh [options]`
+
+Root user run : `sudo su && ./install.sh [options]`
+
+For Mac
+
+Install `brew`, `git`, `zsh`, `php`
+Just run : `./install.sh [options]`
 
 Options
 -------
