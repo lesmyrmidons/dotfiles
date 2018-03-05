@@ -3,6 +3,11 @@
 PACKAGE='curl'
 PWD=`pwd`
 
+# Detect the platform (similar to $OSTYPE)
+lowercase(){
+    echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
+}
+
 OS=`lowercase \`uname\``
 case $OS in
   'linux')
@@ -24,7 +29,7 @@ fi
 echo "Install to composer.phar"
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=../
 
-if [ "$(global)" = false ] ; then
+if [ "$1" = false ] ; then
     cd .. && ./composer.phar install
 else
     # Rename composer.phar composer
