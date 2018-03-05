@@ -54,8 +54,11 @@ case $OS in
   'darwin')
      OS='Mac'
      INSTALL_TERM=false
-     sudo chown -R $(whoami) /usr/local
-     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     which -s brew
+     if [[ $? != 0 ]] ; then
+         sudo chown -R $(whoami) /usr/local
+         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     fi
      brew doctor
      ;;
   *) ;;
