@@ -3,7 +3,7 @@
 CURRENT=`pwd`
 BACKUP=$CURRENT/backup
 INSTALL_COMPOSER=true
-INSTALL_COMPOSER_GLOBAL=false
+INSTALL_COMPOSER_GLOBAL=true
 INSTALL_ZSH=true
 INSTALL_TERM=true
 INSTALL_ANSIBLE=false
@@ -127,8 +127,8 @@ echo ""
 echo "Installation de RVM ----------------------------- "
 curl -L https://get.rvm.io | bash -s stable --auto-dotfiles --autolibs=enable
 type rvm | head -1
-rvm install 2.3.0
-rvm use 2.3.0 --default
+rvm install 2.5.1
+rvm use 2.5.1 --default
 
 if $INSTALL_COMPOSER ; then
     echo "Installation de composer ------------------------- "
