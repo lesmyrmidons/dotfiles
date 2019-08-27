@@ -1,0 +1,313 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    homebrew_taps:
+      - homebrew/cask-drivers
+
+    homebrew_packages:
+      - { name: antiword }
+      - { name: git }
+      - { name: zsh }
+      - { name: zsh-completions }
+      - { name: wget }
+      - { name: tig }
+      - { name: ssh-copy-id }
+      - { name: lastpass-cli }
+      - { name: tmux }
+      - { name: tree }
+      - { name: unrar }
+      - { name: composer }
+
+    homebrew_cask_packages:
+      - alfred
+      - appcleaner
+      - vagrant
+      - virtualbox
+      - virtualbox-extension-pack
+      - jetbrains-toolbox
+      - visual-studio-code
+      - vlc
+      - docker
+      - libreoffice
+      - google-backup-and-sync
+      - google-chrome
+      - google-drive-file-stream
+      - firefox
+
+    mas_packages:
+      - { name: "Memory Clean", id: 451444120 }
+      - { name: Twitter, id: 409789998 }
+      - { name: "WinArchiver Lite", id: 414855915 }
+      - { name: Xcode, id: 497799835 }
+
+    composer_packages:
+      - { name: "hirak/prestissimo" }
+      - { name: "psy/psysh" }
+
+    npm_packages:
+      - { name: "@angular/cli" }
+      - { name: bower }
+      - { name: coffee-script }
+      - { name: grunt }
+      - { name: grunt-cli }
+      - { name: gulp }
+      - { name: hubot }
+      - { name: karma }
+      - { name: less }
+      - { name: localtunnel }
+      - { name: n }
+      - { name: nativefier }
+      - { name: npm-check-updates }
+      - { name: typescript }
+      - { name: typings }
+      - { name: yarn }
+
+    php_configs:
+      # - { regexp: '^;? *(extension_dir) = ".*"',              replace: '\1 = ' }
+      - { regexp: '^;?(max_execution_time) *=.*$',            replace: '\1 = 0' }
+      - { regexp: '^;?(max_input_time) *=.*$',                replace: '\1 = -1' }
+      - { regexp: '^;?(memory_limit) *=.*$',                  replace: '\1 = 512M' }
+      - { regexp: '^;?(date.timezone) *=.*$',                 replace: '\1 = Europe/Paris' }
+      # - { regexp: '^;?(mbstring.language) *=.*$',             replace: '\1 = Japanese' }
+      # - { regexp: '^;?(pdo_mysql.default_socket) *=.*$',      replace: '\1 = /private/tmp/mysql.sock' }
+      # - { regexp: '^;?(always_populate_raw_post_data) *=.*$', replace: '\1 = -1' }   # tentative for php70
+      - { regexp: '^;?(auto_detect_line_endings) *=.*$',      replace: '\1 = On' }
+
+    php_installations:
+      - version: 7.3.7
+        active: true
+        extensions: "imagick=@"   # can add to ~/.phpenv/plugins/php-build/share/php-build/extension/definition
+        php_configs: "{{ php_configs }}"
+
+  handlers:
+    - name: run fc-cache
+      shell: fc-cache -vf
+
+  tasks:
+    - name: nvm
+      shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+    # brew tap
+    - name: install taps of homebrew
+      homebrew_tap: tap="{{ item }}" state=present
+      with_items: "{{ homebrew_taps }}"
+      tags:
+        - brew
+
+    # brew update
+    - name: update homebrew
+      homebrew: update_homebrew=yes
+      tags:
+        - brew
+
+    # brew cask install
+    - name: install homebrew cask packages
+      homebrew_cask: name="{{ item }}" state=present
+      with_items: "{{ homebrew_cask_packages }}"
+      ignore_errors: true
+      tags:
+        - cask
+
+    # brew install
+    - name: install homebrew packages
+      homebrew: name="{{ item.name }}" state="{{ item.state|default('latest') }}" install_options="{{ item.install_options|default() }}"
+      with_items: "{{ homebrew_packages }}"
+      tags:
+        - brew
+
+    # install phpenv
+    - name: install phpenv
+      git: repo=git://github.com/phpenv/phpenv.git dest=~/.phpenv
+      tags:
+        - php
+        - phpenv
+    - name: install php-build
+      git: repo=git://github.com/php-build/php-build.git dest=~/.phpenv/plugins/php-build
+      tags:
+        - php
+        - phpenv
+
+    # install php
+    - name: install macOS SDK headers
+      # @see https://github.com/pyenv/pyenv/issues/1219#issuecomment-428305417
+      # @see https://polidog.jp/2018/11/28/mojave_phpenv/
+      shell: installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+      become: yes
+      become_method: sudo
+      tags:
+        - php
+        - phpenv
+
+    - name: install php
+      shell: |
+        # skip all steps if already installed
+        phpenv versions | grep {{ item.version }} ; if [ $? -ne 0 ] ; then \
+        \
+        # remove symlink of php7 module file
+        (rm -f /usr/local/lib/httpd/modules/libphp7.so || true) && \
+        \
+        # install php with generating php7 module file
+        PHP_BUILD_EXTRA_MAKE_ARGUMENTS=-j4 \
+        PHP_BUILD_CONFIGURE_OPTS="--with-apxs2=/usr/local/bin/apxs" \
+        PHP_BUILD_INSTALL_EXTENSION="{{ item.extensions }}" \
+        phpenv install -s {{ item.version }} && \
+        \
+        # move php7 module file and create symlink
+        mv -f /usr/local/lib/httpd/modules/libphp7.so ~/.phpenv/versions/{{ item.version }}/libexec/ && \
+        ln -sf ~/.phpenv/lib/libphp7.so /usr/local/lib/httpd/modules/ ; \
+        \
+        fi
+      with_items: "{{ php_installations }}"
+      ignore_errors: true
+      tags:
+        - php
+        - phpenv
+    
+    # after this, ~/.phpenv/lib/libphp7.so will be created as a symlink to ~/.phpenv/versions/{version}/libexec/libphp7.so
+    - name: activate specified php
+      shell: phpenv global {{ item.version }}
+      with_items: "{{ php_installations }}"
+      when: item.active
+      tags:
+        - php
+        - phpenv
+
+    # configure php.ini
+    - name: configure php.ini
+      replace: dest=~/.phpenv/versions/{{ item.0.version }}/etc/php.ini regexp="{{ item.1.regexp }}" replace="{{ item.1.replace }}"
+      with_subelements:
+        - "{{ php_installations }}"
+        - php_configs
+      tags:
+        - php
+
+    # configure xhprof
+    # - name: make xhprof dir in DocumentRoot
+    #   file: dest=/usr/local/var/www/htdocs/xhprof state=directory
+    #   tags:
+    #     - php
+    # - name: symlink xhprof into DocumentRoot
+    #   file: src="{{ item.src }}" dest="{{ item.dest }}" state=link
+    #   with_items:
+    #     - { src: /usr/local/opt/php71-xhprof/xhprof_html, dest: /usr/local/var/www/htdocs/xhprof/xhprof_html }
+    #     - { src: /usr/local/opt/php71-xhprof/xhprof_lib, dest: /usr/local/var/www/htdocs/xhprof/xhprof_lib }
+    #   tags:
+    #     - php
+    # - name: put a snippet file into xhprof dir
+    #   copy: src=templates/xhprof.snippet dest=/usr/local/var/www/htdocs/xhprof/xhprof.snippet
+    #   tags:
+    #     - php
+
+    # mas install
+    - name: install mas (App Store) packages
+      shell: mas install "{{ item.id }}"
+      with_items: "{{ mas_packages }}"
+      register: ret
+      changed_when: '"already installed" not in ret.stdout'
+      tags:
+        - mas
+
+    # mas upgrade
+    - name: upgrade all mas (App Store) packages
+      shell: mas upgrade
+      register: ret
+      changed_when: '"Everything is up-to-date" not in ret.stdout'
+      tags:
+        - mas
+
+    # composer global install
+    - name: install composer packages
+      composer: command=require global_command=yes arguments="{{ item.name }}"
+      with_items: "{{ composer_packages }}"
+      tags:
+        - composer
+
+    # install oh-my-zsh
+    - name: install oh-my-zsh
+      shell: sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+      args:
+        creates: ~/.oh-my-zsh
+      tags:
+        - zsh
+    - name: install zsh-completions
+      file: src=/usr/local/share/zsh-completions dest=~/.oh-my-zsh/custom/plugins/zsh-completions state=link
+      tags:
+        - zsh
+
+    # install Ricty font
+    - name: install xquartz
+      homebrew_cask: name=xquartz
+      tags:
+        - ricty
+    - name: install ricty
+      homebrew: name=ricty
+      tags:
+        - ricty
+    - name: copy generated font file
+      shell: "cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/"
+      args:
+        creates: ~/Library/Fonts/Ricty-Bold.ttf
+      notify: run fc-cache
+      tags:
+        - ricty
+
+    # configure apache
+    - name: backup default DocumentRoot directory
+      shell: mv /usr/local/var/www/htdocs /usr/local/var/www/htdocs.bak removes=/usr/local/var/www/htdocs creates=/usr/local/var/www/htdocs.bak
+      tags:
+        - apache
+    - name: put symlink to DocumentRoot
+      file: src="{{ apache.document_root }}" dest=/usr/local/var/www/htdocs state=link force=yes
+      tags:
+        - apache
+    - name: configure httpd.conf (replace)
+      replace: dest=/usr/local/etc/httpd/httpd.conf regexp="{{ item.regexp }}" replace="{{ item.replace }}"
+      with_items:
+        - { regexp: '^( *Listen) .*$',                                  replace: '\1 80' }
+        - { regexp: '^( *User) .*$',                                    replace: '\1 {{ apache.user }}' }
+        - { regexp: '^( *DirectoryIndex) .*$',                          replace: '\1 index.php index.html' }
+        - { regexp: '^( *)# *(AddHandler cgi-script .cgi).*$',          replace: '\1\2' }   # just comment in
+        - { regexp: '^( *)# *(LoadModule rewrite_module +.*)$',         replace: '\1\2' }   # just comment in
+      tags:
+        - apache
+    - name: configure httd.conf (insert)
+      lineinfile: dest=/usr/local/etc/httpd/httpd.conf insertafter="{{ item.insertafter }}" line="{{ item.line }}"
+      with_items:
+        - { insertafter: '^#ServerName ',                     line: "ServerName localhost:80" }
+        - { insertafter: '^ *AddType ',                       line: "    AddType application/x-httpd-php .php" }
+        - { insertafter: '^ *# *Include .+httpd-vhosts.conf', line: "Include /usr/local/etc/httpd/extra/httpd-vhosts.my.conf" }
+      tags:
+        - apache
+    - name: create httpd-vhosts.conf
+      copy: src=templates/httpd-vhosts.my.conf dest=/usr/local/etc/httpd/extra/httpd-vhosts.my.conf
+      args:
+        force: no
+      tags:
+        - apache
+
+    # configure mysql
+    - name: chown mysql directory
+      file: path=/usr/local/var/mysql owner=_mysql group=_mysql recurse=yes
+      become: yes
+      become_method: sudo
+      tags:
+        - mysql
+
+    # install dotfiles
+    - name: git clone dotfiles
+      shell: "{{ dotfiles.clone_command }}"
+      register: ret
+      when: dotfiles.clone_command
+      changed_when: 'ret.rc != 0 or "exists" not in ret.stdout'
+      tags:
+        - dotfiles
+    - name: symlink dotfiles
+      shell: "{{ dotfiles.symlink_command }}"
+      when: ret is changed
+      tags:
+        - dotfiles
