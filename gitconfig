@@ -48,10 +48,6 @@
     horizontal-scroll = 33%     # Scroll 33% of the view width
     tab-size = 4
 
-[remote "origin"]
-    fetch = +refs/heads/*:refs/remotes/origin/*
-    fetch = +refs/tags/*:refs/tags/*
-
 [alias]
     st = status
     ci = commit
