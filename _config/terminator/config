@@ -1,45 +1,82 @@
 [global_config]
-  enabled_plugins = InactivityWatch, CustomCommandsMenu, ActivityWatch, TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
-  suppress_multiple_term_dialog = True
-  title_hide_sizetext = True
   window_state = maximise
+  title_hide_sizetext = True
+  enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, CustomCommandsMenu, Logger, TerminalShot, ActivityWatch, InactivityWatch
+  suppress_multiple_term_dialog = True
 [keybindings]
+[profiles]
+  [[default]]
+    visible_bell = True
+    background_color = "#002b36"
+    background_darkness = 0.82
+    background_type = transparent
+    cursor_color = "#839496"
+    font = Ubuntu Mono 10
+    foreground_color = "#839496"
+    show_titlebar = False
+    scrollback_infinite = True
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    login_shell = True
+    use_system_font = False
+  [[b&w]]
+    cursor_color = "#599760"
+    show_titlebar = False
+    login_shell = True
+  [[tiny]]
+    background_color = "#002b36"
+    background_darkness = 0.82
+    background_type = transparent
+    cursor_color = "#b23030"
+    font = Monospace 8
+    foreground_color = "#839496"
+    show_titlebar = False
+    scrollback_infinite = True
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    login_shell = True
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child0]]]
-      order = 0
-      parent = ""
-      position = 72:27
-      size = 1848, 1025
       type = Window
+      parent = ""
+      order = 0
+      position = 1949:27
+      maximised = False
+      fullscreen = False
+      size = 1891, 1016
+      title = /bin/zsh
+      last_active_term = 50781def-a4af-4ac4-ba85-3a3c5ec987a4
+      last_active_window = True
     [[[child1]]]
-      order = 0
-      parent = child0
-      position = 924
       type = HPaned
-    [[[child3]]]
-      order = 1
-      parent = child1
-      position = 512
-      type = VPaned
+      parent = child0
+      order = 0
+      position = 943
+      ratio = 0.5
     [[[terminal2]]]
-      command = ""
-      order = 0
+      type = Terminal
       parent = child1
-      profile = default
-      type = Terminal
-    [[[terminal4]]]
-      command = ""
       order = 0
-      parent = child3
       profile = default
-      type = Terminal
-    [[[terminal5]]]
-      command = ""
+      uuid = 50781def-a4af-4ac4-ba85-3a3c5ec987a4
+    [[[child3]]]
+      type = VPaned
+      parent = child1
       order = 1
-      parent = child3
-      profile = tiny
+      position = 505
+      ratio = 0.49950544015825915
+    [[[terminal4]]]
       type = Terminal
+      parent = child3
+      order = 0
+      profile = default
+      uuid = 550acfa1-23ca-4b71-9019-b7b33342d366
+    [[[terminal5]]]
+      type = Terminal
+      parent = child3
+      order = 1
+      profile = tiny
+      uuid = b61ed14f-38d3-4ec8-8b01-6347e42a37b7
   [[window1]]
     [[[child1]]]
       parent = window0
@@ -48,31 +85,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    background_darkness = 0.82
-    background_type = transparent
-    cursor_color = "#839496"
-    font = Terminus for Powerline Italic 10
-    foreground_color = "#839496"
-    login_shell = True
-    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    scrollback_infinite = True
-    show_titlebar = False
-    visible_bell = True
-  [[b&w]]
-    cursor_color = "#599760"
-    login_shell = True
-    show_titlebar = False
-  [[tiny]]
-    background_color = "#002b36"
-    background_darkness = 0.82
-    background_type = transparent
-    cursor_color = "#b23030"
-    font = Monospace 8
-    foreground_color = "#839496"
-    login_shell = True
-    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
-    scrollback_infinite = True
-    show_titlebar = False
-    use_system_font = False
