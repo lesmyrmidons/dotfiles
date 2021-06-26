@@ -9,7 +9,6 @@
     visible_bell = True
     background_color = "#002b36"
     background_darkness = 0.82
-    background_type = transparent
     cursor_color = "#839496"
     font = Ubuntu Mono 10
     foreground_color = "#839496"
