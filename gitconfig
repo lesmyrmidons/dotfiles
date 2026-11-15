@@ -1,10 +1,19 @@
 [user]
-    name = Kevin ARBOUIN
+    name = lesmyrmidons
     email = lesmyrmidons@gmail.com
-	signingkey = /home/lesmyrmidons/.ssh/id_ed25519.pub
+    signingkey = ~/.ssh/id_ed25519.pub
 
-[github]
-    user = lesmyrmidons
+[includeIf "gitdir:~/.setup"]
+    path = ~/.setup/dotfiles-custom/.gitconfig-github
+
+[includeIf "gitdir:~/Projects/arcons/"]
+    path = ~/.setup/dotfiles-custom/.gitconfig-arcons
+
+[includeIf "gitdir:~/Projects/client/dnum"]
+    path = ~/.setup/dotfiles-custom/.gitconfig-dnum
+
+[includeIf "gitdir:~/Projects/opensource/"]
+    path = ~/.setup/dotfiles-custom/.gitconfig-github
 
 [color]
     ui = true
@@ -35,12 +44,6 @@
 [merge]
     tool = vimdiff
 
-[sendemail]
-    smtpEncryption = tls
-    smtpServer = smtp.gmail.com
-    smtpUser = lesmyrmidons@gmail.com
-    smtpServerPort = 587
-
 [tig]
     show-date = "relative"      # Show relative commit date.
     show-author = "abbreviated"
@@ -68,9 +71,9 @@
     followTags = true
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [credential "https://gitlab.arcons.io"]
-	helper = 
-	helper = !/home/lesmyrmidons/.local/bin/glab auth git-credential
+    helper = 
+    helper = !/home/lesmyrmidons/.local/bin/glab auth git-credential
 [gpg]
-	format = ssh
+    format = ssh
