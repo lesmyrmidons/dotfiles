@@ -1,7 +1,6 @@
 [global_config]
   window_state = maximise
   enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, CustomCommandsMenu, Logger, TerminalShot, ActivityWatch, InactivityWatch
-  suppress_multiple_term_dialog = True
 [keybindings]
 [profiles]
   [[default]]

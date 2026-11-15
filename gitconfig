@@ -1,6 +1,7 @@
 [user]
     name = Kevin ARBOUIN
     email = lesmyrmidons@gmail.com
+	signingkey = /home/lesmyrmidons/.ssh/id_ed25519.pub
 
 [github]
     user = lesmyrmidons
@@ -66,3 +67,10 @@
     default = simple
     followTags = true
 
+[init]
+	defaultBranch = main
+[credential "https://gitlab.arcons.io"]
+	helper = 
+	helper = !/home/lesmyrmidons/.local/bin/glab auth git-credential
+[gpg]
+	format = ssh
